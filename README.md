@@ -3,7 +3,7 @@
 
 ## Cosmology Details
 
-Currently, this calculator is used to study dark energy equation of state, so the implementation calculates $\Omega_{\Lamdba} = 1 - \Omega_{\gamma} - \Omega_{\textrm{m}} - \Omega_{K}$.
+Currently, this calculator is used to study dark energy equation of state, so the implementation calculates $\Omega_{\Lambda} = 1 - \Omega_{\gamma} - \Omega_{\textrm{m}} - \Omega_{K}$.
 
 To create an integration table, two parameter files are required:
 
@@ -90,7 +90,8 @@ struct IntegratorTestInfo
     int nints;          # number of integral performances between a and b
     float acc;          # accuracy to end integration
     char outFile[MAXLEN];# where to place outgoing integration table
-};`
+};
+`
 
 1. `Parse_IntegralParams()` - populate an instance of `IntegratorTestInfo`
 2. `Parse_IntegralParam()` - populate one parameter of `IntegratorTestInfo`
@@ -110,7 +111,7 @@ where $x \in (a,b)$, and saves $x$ and $F(x) - F(a)$ (computed integral value).
 There are example integrand $f(x)$ in the `integrands.cpp` that are called if the `TEST_INTEGRATOR` flag is passed through during compilation. By default, the integrator will run on the integral
 
 $$
-\int_a^x \frac{4}{1 + x^2 '} \textrm{d}x' = 4 (\arctan(x) - \arctan(a))
+\int_a^x \frac{4}{1 + y^2 '} \textrm{d}y = 4 (\arctan(x) - \arctan(a))
 $$
 
 such that passing in $a=0$ and $b=1$ gives an approximation of $\pi$.

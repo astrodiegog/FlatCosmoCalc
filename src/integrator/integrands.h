@@ -10,3 +10,7 @@ double integrandTWO(double x, double *args);
 /* Routine to help unit test integrator. Compare against ln(ax+b)/a */
 double integrandTHREE(double x, double *args);
 
+
+double integrandFOUR(double x, double *args);
+
+double integrandFOUR_LN(double x, double *args);

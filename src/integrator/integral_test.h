@@ -10,6 +10,10 @@ extern void Parse_IntegralParam(char *key, char *value, struct IntegratorTestInf
 /* Routine to create integration table and populate */
 double **CreateIntegralTable(struct IntegratorTestInfo *integratortestinfo, double (*integrand)(double, double*), double *integrand_args);
 
+/*\fn double **CreateIntegralTableLN(struct* IntegratorTestInfo, double*, double*) */
+/* Routine to create integration table and populate in log-space */
+double **CreateIntegralTableLN(struct IntegratorTestInfo *integratortestinfo, double (*integrandXLN)(double, double*), double *integrandXLN_args);
+
 /*\fn void DestroyIntegralTable(struct* IntegratorTestInfo, double**) */
 /* Routine to free integration table from memory */
 void DestroyIntegralTable(struct IntegratorTestInfo *integratortestinfo, double **integral_table);
@@ -22,6 +26,7 @@ void SaveIntegralTable(struct IntegratorTestInfo *integratortestinfo, double **i
 /* Routine to save integral table on integrand to where integralparamfile says */
 void RunTest(char *integralparam_file, double (*integrand)(double, double*), double *integrand_args);
 
+
 /* Define max string buffer lengths */
 #define MAXLEN 1028
 
@@ -33,5 +38,6 @@ struct IntegratorTestInfo
     int nmax;               // maximum n-th order of Romberg integration
     int nints;              // number of integral performances between a and b
     float acc;              // accuracy to end integration
+    bool log;               // whether domain is in log-space
     char outFile[MAXLEN];   // where to place outgoing integration table
 };

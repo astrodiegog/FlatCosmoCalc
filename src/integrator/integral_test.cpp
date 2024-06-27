@@ -12,6 +12,9 @@ void RunTest(char *integralparam_file, double (*integrand)(double, double*), dou
     /* Declare struct holding integration values */
     struct IntegratorTestInfo integratortest_info;
 
+    /* Declare integration table */
+    double **int_table;
+
     /* Grab info from integralparam_file & place onto IntegratorTestInfo */
     Parse_IntegralParams(integralparam_file, &integratortest_info);
 
@@ -20,7 +23,14 @@ void RunTest(char *integralparam_file, double (*integrand)(double, double*), dou
 #endif
 
     /* Create integration table */
-    double **int_table = CreateIntegralTable(&integratortest_info, integrand,integrand_args);
+    if (integratortest_info.log)
+    {
+        int_table = CreateIntegralTableLN(&integratortest_info, integrand,integrand_args);
+    }
+    else
+    {
+        int_table = CreateIntegralTable(&integratortest_info, integrand,integrand_args);
+    }
 
     /* Save integration table */
     SaveIntegralTable(&integratortest_info, int_table);
@@ -54,10 +64,18 @@ void SaveIntegralTable(struct IntegratorTestInfo *integratortestinfo, double **i
         fprintf(foutptr, "expected accuracy = %.20f \n", integratortestinfo->acc);
         fprintf(foutptr, "number of integrations = %4d \n", integratortestinfo->nints);
 
-        fprintf(foutptr, "x, F(x) \n");
+        if (integratortestinfo->log)
+        {
+            fprintf(foutptr, "ln(x), F(x) \n");
+        }
+        else
+        {
+            fprintf(foutptr, "x, F(x) \n");
+        }
+        
         for (i=0; i < (integratortestinfo->nints - 1); i++)
         {
-            fprintf(foutptr, "%.20f, %.20f \n", integral_table[i][0], integral_table[i][1]);
+            fprintf(foutptr, "%.20e, %.20e \n", integral_table[i][0], integral_table[i][1]);
         }
     }
 }
@@ -75,6 +93,63 @@ void DestroyIntegralTable(struct IntegratorTestInfo *integratortestinfo, double 
     }
 
     free(integral_table);
+}
+
+double **CreateIntegralTableLN(struct IntegratorTestInfo *integratortestinfo, double (*integrandXLN)(double, double*), double *integrandXLN_args)
+{
+    /* iterator */
+    int i;
+
+    /* Declare integral, integral limits, and step size */
+    double integral, ln_x_upp, ln_xmin, ln_xmax, ln_h;
+
+    /* Declare + Define number of rows to save */
+    int nrows = integratortestinfo->nints - 1;
+
+    /* Declare the integral table as array of double pointers */
+    double **int_table = (double **) malloc(nrows * sizeof(double *));
+
+    /* Prevent negative or zero for integration bounds */
+    if(integratortestinfo->a <= 0.)
+    {
+        integratortestinfo->a = 1e-20;
+    }
+    
+    if(integratortestinfo->b <= 0.)
+    {
+        integratortestinfo->b = 1e-5;
+    }
+
+    /* Set lower and upper integration bounds in log-space */
+    ln_xmin = log(integratortestinfo->a);
+    ln_xmax = log(integratortestinfo->b);
+
+    /* Calculate the step size over desired integration bounds */
+    ln_h = (ln_xmax - ln_xmin) / ((double)nrows) ;
+
+    for (i=0; i < nrows; i++)
+    {
+        /* Calculate the upper limit to integrate out to */
+        ln_x_upp = ln_xmin + (double)(i+1) * ln_h;
+
+        /* Compute the integral */
+        integral = RombergIntegral(integrandXLN, integrandXLN_args, ln_xmin, 
+        ln_x_upp, integratortestinfo->nmax, integratortestinfo->acc);
+
+        /* Declare memory for this row's data*/
+        int_table[i] = (double *) malloc(2 * sizeof(double));
+
+        /* Place data onto integral table */
+        int_table[i][0] = ln_x_upp;
+        int_table[i][1] = integral;
+
+    #ifdef DEBUG
+        printf("Integral %i (%.4e -> %.4e): %.8f \n", i, integratortestinfo->a, exp(ln_x_upp), integral);
+        printf("\t ln(a): %.4e \t ln(x): %.4e \t x: %.4e \n\n", ln_xmin, ln_x_upp, exp(ln_x_upp));
+    #endif
+    }
+    
+    return int_table;
 }
 
 
@@ -142,6 +217,21 @@ extern void Parse_IntegralParam(char *key, char *value, struct IntegratorTestInf
     else if (!strcmp(key, "nints"))
     {
         integratortestinfo->nints = atof(value);
+    }
+    else if (!strcmp(key, "log"))
+    {
+        if (value[0] == 'Y')
+        {
+            integratortestinfo->log = true;
+        }
+        else if (value[0] == 'N')
+        {
+            integratortestinfo->log = false;
+        }
+        else
+        {
+            printf("UNKNOWN LOG PARAM: %s = %s", key, value);
+        }
     }
     else if (!strcmp(key, "outFile"))
     {

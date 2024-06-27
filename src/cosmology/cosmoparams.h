@@ -32,7 +32,7 @@ struct TimeDomainParams
     double zmin, zmax;
     double amin, amax;
 
-    /* Declare whether to make a logspace array */
+    /* Declare whether to make a logspace redshift array */
     bool log;
 
     /* Declare how many data points to use */

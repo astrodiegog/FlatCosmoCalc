@@ -96,12 +96,9 @@ extern void Parse_CosmoParams(char *cosmoparam_file, struct CosmoParams *cosmopa
 
     fclose(fptr);
 
-    // /* Set OmegaK */
-    // cosmoparams->OmegaK = 1 - (cosmoparams->OmegaL + cosmoparams->OmegaR + cosmoparams->OmegaM);
 
     /* Set OmegaDE */
-    cosmoparams->OmegaL = 1 - (cosmoparams->OmegaK + cosmoparams->OmegaR + cosmoparams->OmegaM);
-    
+    cosmoparams->OmegaL = 1 - (cosmoparams->OmegaK + cosmoparams->OmegaR + cosmoparams->OmegaM);    
 
     /* Convert H0 (km/s/Mpc) to (1/s)*/
     cosmoparams->H0 /= MPC_CGS;

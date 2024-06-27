@@ -13,11 +13,12 @@ Cosmology::Cosmology(struct CosmoParams *cosmoparams_in, struct TimeDomainParams
     timedomainparams = timedomain_in;
 
     /* Calculate rho_crit */
-    rho_crit = 3*(cosmoparams->H0)*(cosmoparams->H0)/(8*PI*G_CGS);
+    rho_crit = 3. * (cosmoparams->H0) * (cosmoparams->H0)/(8. * PI * G_CGS);
     
-    z_infty = 1e4;
-    integral_acc = 1e-10;
-    integral_Rmmax = 12;
+    z_infty = 1e8;
+    
+    integral_acc = 1e-14;
+    integral_Rmmax = 14;
 
     ndata_table = 0;
 
@@ -113,7 +114,6 @@ void Cosmology::PrintCosmoParams()
     printf("\t OmegaK: %.3e \n", cosmoparams->OmegaK);
     printf("\t w0: %.3e \n", cosmoparams->w0);
     printf("\t wa: %.3e \n", cosmoparams->wa);
-
     printf("\t rho_crit: %.3e (g/cm^3) \n", rho_crit);
 }
 

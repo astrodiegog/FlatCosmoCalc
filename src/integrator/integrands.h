@@ -14,3 +14,15 @@ double integrandTHREE(double x, double *args);
 double integrandFOUR(double x, double *args);
 
 double integrandFOUR_LN(double x, double *args);
+
+double integrandFIVE(double x, double *args);
+
+double integrandFIVE_LN(double x, double *args);
+
+double integrandSIX(double x, double *args);
+
+double integrandSIX_LN(double x, double *args);
+
+double integrandSEVEN(double x, double *args);
+
+double integrandSEVEN_LN(double x, double *args);

@@ -1,6 +1,7 @@
 a=0.
-b=10.
-nmax=10
+b=10000.
+nmax=12
 acc=0.0000000001
 nints=50
-outFile=integrandTHREE_vals.txt
+log=Y
+outFile=integrandFOUR_vals.txt

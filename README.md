@@ -111,7 +111,7 @@ where $x \in (a,b)$, and saves $x$ and $F(x) - F(a)$ (computed integral value).
 There are example integrand $f(x)$ in the `integrands.cpp` that are called if the `TEST_INTEGRATOR` flag is passed through during compilation. By default, the integrator will run on the integral
 
 $$
-\int_a^x \frac{4}{1 + y^2 '} \textrm{d}y = 4 (\arctan(x) - \arctan(a))
+\int_a^x \frac{4}{1 + y^2} \textrm{d}y = 4 (\arctan(x) - \arctan(a))
 $$
 
 such that passing in $a=0$ and $b=1$ gives an approximation of $\pi$.

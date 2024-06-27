@@ -1,0 +1,6 @@
+a=0.
+b=10.
+nmax=10
+acc=0.0000000001
+nints=50
+outFile=integrandTHREE_vals.txt

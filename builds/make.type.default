@@ -1,0 +1,3 @@
+#-- Default include howdy as check
+
+DFLAGS    += -DHOWDY

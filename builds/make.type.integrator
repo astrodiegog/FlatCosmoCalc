@@ -1,0 +1,4 @@
+include builds/make.type.debug
+
+DFLAGS += -DTEST_INTEGRATOR
+DFLAGS += -DDEBUG_INTEGRATOR

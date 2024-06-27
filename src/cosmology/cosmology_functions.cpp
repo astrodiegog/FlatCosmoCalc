@@ -21,7 +21,7 @@ double time_evo(double z, double *args)
     double one_z3 = one_z * one_z2;
     double one_z4 = one_z * one_z3;
     double one_zDE = pow(one_z3, 1. + w0 + wa);
-    double exp_DE = exp((-3 * wa) * (z / one_z));
+    double exp_DE = exp((-3. * wa) * (z / one_z));
 
     double O_k = (OmegaK0)*one_z2;
     double O_M = (OmegaM0)*one_z3;
@@ -34,7 +34,7 @@ double time_evo(double z, double *args)
 
 double dist_comovingLOS_integrand(double z, double *args)
 {
-    return 1./(time_evo(z, args));
+    return 1. / (time_evo(z, args));
 }
 
 double Cosmology::dist_comoving_LOS(double z)
@@ -47,7 +47,7 @@ double Cosmology::dist_comoving_LOS(double z)
 
     if (z)
     {
-        return DH*RombergIntegral(dist_comovingLOS_integrand, fn_args, 0, z, integral_Rmmax, integral_acc);
+        return DH*RombergIntegral(dist_comovingLOS_integrand, fn_args, 0., z, integral_Rmmax, integral_acc);
     }
     else
     {
@@ -152,11 +152,13 @@ double time_lookback_integrand(double z, double *args)
     return 1./((1.+z)*time_evo(z, args));
 }
 
-double time_conformal_integrand(double z, double *args)
+double time_lookback_integrand_LN(double ln_z, double *args)
 {
-    return 1./(time_evo(z, args));
-}
+    double z = exp(ln_z);
+    double integrand = time_lookback_integrand(z, args);
 
+    return z * integrand;
+}
 
 double Cosmology::time_lookback(double z)
 {
@@ -171,7 +173,28 @@ double Cosmology::time_age(double z)
     double args[6] = {cosmoparams->OmegaM, cosmoparams->OmegaR, cosmoparams->OmegaL, cosmoparams->OmegaK, cosmoparams->w0, cosmoparams->wa};
     double *fn_args = &args[0];
 
-    return RombergIntegral(time_lookback_integrand, fn_args, z, z_infty, integral_Rmmax, integral_acc);
+    /* Guard against ln(0.) */
+    if (z <= 0)
+    {
+        z = LN_MIN;
+    }
+    double ln_z = log(z);
+    double ln_zinfty = log(z_infty);
+
+    return RombergIntegral(time_lookback_integrand_LN, fn_args, ln_z, ln_zinfty, integral_Rmmax, integral_acc);
+}
+
+double time_conformal_integrand(double z, double *args)
+{
+    return 1./(time_evo(z, args));
+}
+
+double time_conformal_integrand_LN(double ln_z, double *args)
+{
+    double z = exp(ln_z);
+    double integrand = time_conformal_integrand(z, args);
+
+    return z * integrand;
 }
 
 double Cosmology::time_conformal(double z)
@@ -179,5 +202,13 @@ double Cosmology::time_conformal(double z)
     double args[6] = {cosmoparams->OmegaM, cosmoparams->OmegaR, cosmoparams->OmegaL, cosmoparams->OmegaK, cosmoparams->w0, cosmoparams->wa};
     double *fn_args = &args[0];
 
-    return RombergIntegral(time_conformal_integrand, fn_args, z, z_infty, integral_Rmmax, integral_acc);
+    /* Guard against ln(0.) */
+    if (z <= 0)
+    {
+        z = LN_MIN;
+    }
+    double ln_z = log(z);
+    double ln_zinfty = log(z_infty);
+
+    return RombergIntegral(time_conformal_integrand_LN, fn_args, ln_z, ln_zinfty, integral_Rmmax, integral_acc);
 }

@@ -16,17 +16,17 @@ double time_evo(double z, double *args)
     double w0 = args[4];
     double wa = args[5];
 
-    double one_z = 1+z;
+    double one_z = 1. + z;
     double one_z2 = one_z * one_z;
     double one_z3 = one_z * one_z2;
     double one_z4 = one_z * one_z3;
     double one_zDE = pow(one_z3, 1. + w0 + wa);
     double exp_DE = exp((-3. * wa) * (z / one_z));
 
-    double O_k = (OmegaK0)*one_z2;
-    double O_M = (OmegaM0)*one_z3;
-    double O_R = (OmegaR0)*one_z4;
-    double O_L = (OmegaL0)*one_zDE*exp_DE;
+    double O_k = (OmegaK0) * one_z2;
+    double O_M = (OmegaM0) * one_z3;
+    double O_R = (OmegaR0) * one_z4;
+    double O_L = (OmegaL0) * one_zDE * exp_DE;
 
     return sqrt(O_M + O_R + O_L + O_k);
 }
@@ -149,7 +149,7 @@ double Cosmology::density(double z)
 
 double time_lookback_integrand(double z, double *args)
 {
-    return 1./((1. + z) * time_evo(z, args));
+    return 1. / ((1. + z) * time_evo(z, args));
 }
 
 double time_lookback_integrand_LN(double ln_z, double *args)

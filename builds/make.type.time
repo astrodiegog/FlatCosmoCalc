@@ -1,0 +1,7 @@
+#-- Save cosmology info related to time
+
+DFLAGS    += -DSAVE_TIME_LOOKBACK
+DFLAGS    += -DSAVE_TIME_AGE
+DFLAGS    += -DSAVE_TIME_CONFORMAL
+
+DFLAGS    += -DSAVE_HUBBLE

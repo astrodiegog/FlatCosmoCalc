@@ -33,10 +33,10 @@ int main(int argc, char **argv)
         integratorparam_file = argv[1];
     }
 
-    double integrand_args[1] = {0.};
+    double integrand_args[1] = {0.25};
     double *pintegrand_args = &integrand_args[0];
 
-    RunTest(integratorparam_file, integrandONE, pintegrand_args);
+    RunTest(integratorparam_file, integrandSEVEN_LN, pintegrand_args);
 
 #else
     /* Declare cosmo & time parameter file */
@@ -74,6 +74,13 @@ int main(int argc, char **argv)
     cosmology.PrintTimeDomainParams();
     
     double **integral_table = cosmology.GetIntegrationTable();
+
+    double age = cosmology.time_age(0.);
+    double age_s = age / cosmoparams.H0;
+    double age_Gyr = age_s / GYR_CGS;
+
+    printf("Age Integral: %.6e \n", age);
+    printf("Age of Universe: %.6e s = %.6f Gyr\n", age_s, age_Gyr);
 
     cosmology.SaveIntegrationTable(integral_table, table_outfname);
 

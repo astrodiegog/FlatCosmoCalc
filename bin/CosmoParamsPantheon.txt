@@ -1,6 +1,6 @@
 H0=68.03
 OmegaM=0.3085
-OmegaR=0.0000910567
+OmegaR=0.00
 OmegaK=0.
 w0=-0.827
 wa=-0.750

@@ -15,7 +15,7 @@ Cosmology::Cosmology(struct CosmoParams *cosmoparams_in, struct TimeDomainParams
     /* Calculate rho_crit */
     rho_crit = 3. * (cosmoparams->H0) * (cosmoparams->H0)/(8. * PI * G_CGS);
     
-    z_infty = 1e8;
+    z_infty = 1e5;
     
     integral_acc = 1e-14;
     integral_Rmmax = 14;

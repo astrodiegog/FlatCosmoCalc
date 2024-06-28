@@ -149,7 +149,7 @@ double Cosmology::density(double z)
 
 double time_lookback_integrand(double z, double *args)
 {
-    return 1./((1.+z)*time_evo(z, args));
+    return 1./((1. + z) * time_evo(z, args));
 }
 
 double time_lookback_integrand_LN(double ln_z, double *args)

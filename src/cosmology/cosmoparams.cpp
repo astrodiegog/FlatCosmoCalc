@@ -10,27 +10,27 @@ extern void Parse_CosmoParam(char *key, char *value, struct CosmoParams *cosmopa
 {
     if(!strcmp(key, "H0"))
     {
-        cosmoparams->H0 = atof(value);
+        cosmoparams->H0 = (double) atof(value);
     }
     else if (!strcmp(key, "OmegaM"))
     {
-        cosmoparams->OmegaM = atof(value);
+        cosmoparams->OmegaM = (double) atof(value);
     }
     else if (!strcmp(key, "OmegaR"))
     {
-        cosmoparams->OmegaR = atof(value);
+        cosmoparams->OmegaR = (double) atof(value);
     }
     else if (!strcmp(key, "OmegaK"))
     {
-        cosmoparams->OmegaK = atof(value);
+        cosmoparams->OmegaK = (double) atof(value);
     }
     else if (!strcmp(key, "w0"))
     {
-        cosmoparams->w0 = atof(value);
+        cosmoparams->w0 = (double) atof(value);
     }
     else if (!strcmp(key, "wa"))
     {
-        cosmoparams->wa = atof(value);
+        cosmoparams->wa = (double) atof(value);
     }
     else
     {
@@ -98,7 +98,7 @@ extern void Parse_CosmoParams(char *cosmoparam_file, struct CosmoParams *cosmopa
 
 
     /* Set OmegaDE */
-    cosmoparams->OmegaL = 1 - (cosmoparams->OmegaK + cosmoparams->OmegaR + cosmoparams->OmegaM);    
+    cosmoparams->OmegaL = 1. - (cosmoparams->OmegaK + cosmoparams->OmegaR + cosmoparams->OmegaM);    
 
     /* Convert H0 (km/s/Mpc) to (1/s)*/
     cosmoparams->H0 /= MPC_CGS;
@@ -110,11 +110,11 @@ extern void Parse_TimeParam(char *key, char *value, struct TimeDomainParams *tim
 {
     if(!strcmp(key, "zmin"))
     {
-        timedomain->zmin = atof(value);
+        timedomain->zmin = (double) atof(value);
     }
     else if (!strcmp(key, "zmax"))
     {
-        timedomain->zmax = atof(value);
+        timedomain->zmax = (double) atof(value);
     }
     else if (!strcmp(key, "ntime"))
     {

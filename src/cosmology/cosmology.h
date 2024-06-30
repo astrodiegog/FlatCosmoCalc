@@ -3,7 +3,6 @@
 #define KM_CGS      1.0e5            // km in cm
 #define C_CGS       2.99792458e10    // speed of light in cm/s
 #define G_CGS       6.67259e-8       // gravitational constant, cgs
-// #define GYR_CGS     3.1536e16        // Gyr in s
 #define GYR_CGS     3.15576e16        // Gyr in s
 #define PI          3.141592653      // pi!
 #define LN_MIN      1.0e-30          // Minimum log value -- replaces ln(0)

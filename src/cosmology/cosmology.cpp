@@ -15,7 +15,7 @@ Cosmology::Cosmology(struct CosmoParams *cosmoparams_in, struct TimeDomainParams
     /* Calculate rho_crit */
     rho_crit = 3. * (cosmoparams->H0) * (cosmoparams->H0)/(8. * PI * G_CGS);
     
-    z_infty = 1e5;
+    z_infty = 1.e12;
     
     integral_acc = 1e-14;
     integral_Rmmax = 14;
@@ -247,7 +247,25 @@ void Cosmology::SaveIntegrationTable(double **integral_table, char *fname)
         printf("Writing outputs !\n");
     #endif
 
-        /* Place header into file */
+        /* Place cosmological parameters */
+        fprintf(foutptr, " --- Cosmological Parameters --- \n");
+        fprintf(foutptr, "\t H0: %.4e (1/s) = %.4f (km/s/Mpc) \n", cosmoparams->H0, (cosmoparams->H0)/(KM_CGS/MPC_CGS));
+        fprintf(foutptr, "\t OmegaM: %.4e \n", cosmoparams->OmegaM);
+        fprintf(foutptr, "\t OmegaR: %.4e \n", cosmoparams->OmegaR);
+        fprintf(foutptr, "\t OmegaL: %.4e \n", cosmoparams->OmegaL);
+        fprintf(foutptr, "\t OmegaK: %.4e \n", cosmoparams->OmegaK);
+        fprintf(foutptr, "\t\t w0: %.4e \n", cosmoparams->w0);
+        fprintf(foutptr, "\t\t wa: %.4e \n", cosmoparams->wa);
+        fprintf(foutptr, "\t rho_crit: %.4e (g/cm^3) \n", rho_crit);
+
+
+        /* Place age of cosmology to present day */
+        double age_s = time_age(0.) / cosmoparams->H0;
+        double age_Gyr = age_s / GYR_CGS;
+        printf("Age of Universe: %.6e s = %.6e Gyr\n", age_s, age_Gyr);
+
+
+        /* Place header of data into file */
         fprintf(foutptr, "z, log10(1+z), a");
 
     #ifdef SAVE_TIME_LOOKBACK
@@ -293,6 +311,7 @@ void Cosmology::SaveIntegrationTable(double **integral_table, char *fname)
         fprintf(foutptr, " \n");
 
 
+        /* Place data into file */
         for (i = 0; i < timedomainparams->ntime; i++)
         {
             fprintf(foutptr, "%.8e, %.8e, %.8e", integral_table[i][0], integral_table[i][1], integral_table[i][2]);

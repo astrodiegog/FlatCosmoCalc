@@ -120,7 +120,7 @@ double Cosmology::dist_modulus(double z)
     if (z)
     {
         double d_L = dist_luminosity(z);
-        return  5*log10(d_L / (10*PC_CGS));
+        return  5. * log10(d_L / (10. * PC_CGS));
     }
     else
     {
@@ -133,7 +133,7 @@ double Cosmology::hubble_param(double z)
     double args[6] = {cosmoparams->OmegaM, cosmoparams->OmegaR, cosmoparams->OmegaL, cosmoparams->OmegaK, cosmoparams->w0, cosmoparams->wa};
     double *fn_args = &args[0];
 
-    return cosmoparams->H0*time_evo(z, fn_args);
+    return cosmoparams->H0 * time_evo(z, fn_args);
 }
 
 double Cosmology::density(double z)
@@ -142,7 +142,7 @@ double Cosmology::density(double z)
     double *fn_args = &args[0];
     double time_evolution = time_evo(z, fn_args);
 
-    return rho_crit*time_evolution*time_evolution;
+    return rho_crit * time_evolution * time_evolution;
 }
 
 

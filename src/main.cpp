@@ -75,13 +75,6 @@ int main(int argc, char **argv)
     
     double **integral_table = cosmology.GetIntegrationTable();
 
-    double age = cosmology.time_age(0.);
-    double age_s = age / cosmoparams.H0;
-    double age_Gyr = age_s / GYR_CGS;
-
-    printf("Age Integral: %.6e \n", age);
-    printf("Age of Universe: %.6e s = %.6f Gyr\n", age_s, age_Gyr);
-
     cosmology.SaveIntegrationTable(integral_table, table_outfname);
 
     cosmology.DestroyIntegrationTable(integral_table);

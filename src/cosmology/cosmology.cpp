@@ -34,6 +34,10 @@ Cosmology::Cosmology(struct CosmoParams *cosmoparams_in, struct TimeDomainParams
     ndata_table++;
 #endif
 
+#ifdef SAVE_TIME_CONFORMAL_AGE
+    ndata_table++;
+#endif
+
 #ifdef SAVE_DIST_LUM
     ndata_table++;
 #endif
@@ -75,13 +79,13 @@ double *Cosmology::GetTimeArray()
     if(!timedomainparams->zmin)
     {
         /* Have to be careful with a minimum redshift of 0 */
-        timedomainparams->zmin = 1e-6;
+        timedomainparams->zmin = 1.0e-4;
     }
 
     if(timedomainparams->log)
     {
-        double l_zmin = log10(1 + timedomainparams->zmin);
-        double l_zmax = log10(1 + timedomainparams->zmax);
+        double l_zmin = log10(timedomainparams->zmin);
+        double l_zmax = log10(timedomainparams->zmax);
         double l_dz = (l_zmax - l_zmin)/(timedomainparams->ntime - 1);
 
         for (i = 0;i<timedomainparams->ntime;i++)
@@ -173,6 +177,12 @@ double **Cosmology::GetIntegrationTable()
     #ifdef SAVE_TIME_CONFORMAL
         cosmosnap.time_conformal = time_conformal(cosmosnap.z_snap);
         int_table[i][j+3] = cosmosnap.time_conformal;
+        j++;
+    #endif
+
+    #ifdef SAVE_TIME_CONFORMAL_AGE
+        cosmosnap.time_conformal_age = time_conformal_age(cosmosnap.z_snap);
+        int_table[i][j+3] = cosmosnap.time_conformal_age;
         j++;
     #endif
 
@@ -278,6 +288,10 @@ void Cosmology::SaveIntegrationTable(double **integral_table, char *fname)
 
     #ifdef SAVE_TIME_CONFORMAL
         fprintf(foutptr, ", H0*t_conf");
+    #endif
+
+    #ifdef SAVE_TIME_CONFORMAL_AGE
+        fprintf(foutptr, ", H0*t_conf_age");
     #endif
 
     #ifdef SAVE_DIST_LUM

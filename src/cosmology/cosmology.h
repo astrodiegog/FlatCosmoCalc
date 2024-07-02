@@ -39,6 +39,9 @@ public:
     /* Return conformal time to a redshift */
     double time_conformal(double z);
 
+    /* Return conformal age at a redshift */
+    double time_conformal_age(double z);
+
     /* Return comoving line of sight distance to some redshift */
     double dist_comoving_LOS(double z);
 
@@ -93,6 +96,10 @@ struct CosmoSnapshot
 
 #ifdef SAVE_TIME_CONFORMAL
     double time_conformal;
+#endif
+
+#ifdef SAVE_TIME_CONFORMAL_AGE
+    double time_conformal_age;
 #endif
 
 #ifdef SAVE_DIST_LUM

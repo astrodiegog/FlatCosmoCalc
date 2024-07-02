@@ -45,6 +45,9 @@ int main(int argc, char **argv)
     /* Declare fname for integration table */
     char *table_outfname;
 
+    /* Declare total energy-density */
+    double Omega_tot;
+
     /* Declare CosmoParams & TimeParams structs */
     struct CosmoParams cosmoparams;
     struct TimeDomainParams timedomainparams;
@@ -52,6 +55,7 @@ int main(int argc, char **argv)
     if (argc < 4)
     {
         fprintf(stderr, "No Outgoing Table file name! ahh \n");
+        return 0;
     }
     else
     {
@@ -60,9 +64,21 @@ int main(int argc, char **argv)
         table_outfname = argv[3];
     }
 
-
-    /* Create & populate cosmoparams & timedomainparams*/
+    /* Create & populate cosmoparams */
     Parse_CosmoParams(cosmoparam_file, &cosmoparams);
+
+    /* Test flatness */
+    Omega_tot = cosmoparams.OmegaM + cosmoparams.OmegaK + cosmoparams.OmegaR + cosmoparams.OmegaL;
+    if( Omega_tot != 1.0 )
+    {
+        printf("ERROR: The provided energy-densities to do not correspond \n");
+        printf("\t to a present-day flat Universe. Please change \n");
+        printf("\t the input cosmological parameters. ty! (: \n");
+
+        return 0;
+    }
+
+    /* Create & populate timedomainparams */
     Parse_TimeParams(timeparam_file, &timedomainparams);
 
     /* Create Cosmology object with param structs */

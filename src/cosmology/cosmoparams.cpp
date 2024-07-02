@@ -24,6 +24,10 @@ extern void Parse_CosmoParam(char *key, char *value, struct CosmoParams *cosmopa
     {
         cosmoparams->OmegaK = (double) atof(value);
     }
+    else if (!strcmp(key, "OmegaL"))
+    {
+        cosmoparams->OmegaL = (double) atof(value);
+    }
     else if (!strcmp(key, "w0"))
     {
         cosmoparams->w0 = (double) atof(value);
@@ -95,10 +99,6 @@ extern void Parse_CosmoParams(char *cosmoparam_file, struct CosmoParams *cosmopa
     }
 
     fclose(fptr);
-
-
-    /* Set OmegaDE */
-    cosmoparams->OmegaL = 1. - (cosmoparams->OmegaK + cosmoparams->OmegaR + cosmoparams->OmegaM);    
 
     /* Convert H0 (km/s/Mpc) to (1/s)*/
     cosmoparams->H0 /= MPC_CGS;

@@ -1,6 +1,7 @@
 H0=67.66
-OmegaM=0.0
-OmegaK=1.0
-OmegaR=0.0
-w0=-1.0
-wa=0.0
+OmegaM=0.0000
+OmegaK=1.0000
+OmegaR=0.0000
+OmegaL=0.0000
+w0=-1.000
+wa=0.000

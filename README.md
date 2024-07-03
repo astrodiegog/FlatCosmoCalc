@@ -45,7 +45,7 @@ The equations implemented are saved in `cosmology_functions.cpp`. A helpful revi
 First we define the time evolution function
 
 $$
-\xi(z) = \sqrt{\Omega_{k}(1 + z)^{2} + \Omega_{\textrm{m}}(1 + z)^{3} + \Omega_{\textrm{R}}(1 + z)^{4} + \Omega_{\Lambda} (1+z)^{3(1 + w_0 + w_a)} \exp \left\{ \frac{-3 w_a z}{1 + z} \right\} }
+\xi(z) = \sqrt{\Omega_{k}(1 + z)^{2} + \Omega_{\textrm{m}}(1 + z)^{3} + \Omega_{\textrm{R}}(1 + z)^{4} + \Omega_{\Lambda} (1+z)^{3(1 + w_0 + w_a)} \exp \left[ \frac{-3 w_a z}{1 + z} \right] }
 $$
 
 where the $\Omega$ values correspond to
@@ -89,11 +89,8 @@ Transverse comoving distance
 
 $$
 d_{\textrm{trans}}(z) = \begin{cases}
-
 D_H \sin \left[ \sqrt{|\Omega_{k}| \left(d_{\textrm{LOS}}(z) / D_{H} \right) } \right] / \sqrt{|\Omega_{k}|} & \mathrm{if} & \Omega_{k} < 0 \\
-
 D_H \sinh \left[ \sqrt{\Omega_{k} \left(d_{\textrm{LOS}}(z) / D_{H} \right) } \right] / \sqrt{\Omega_{k}} & \mathrm{if} & \Omega_{k} > 0 \\
-
 d_{\textrm{LOS}}(z) & \mathrm{if} & \Omega_{k} = 0 \\
 \end{cases}
 $$
@@ -172,10 +169,10 @@ In the `test` subdirectory, there are two jupyter notebooks that serve as benchm
 
 To create this calculator, we used an implementation of Romberg's integration method. To ensure that this method is accurate, we created a `integral_test` file in the `integrator` subdirectory. This file has a struct definition and six functions in testing the integrator in `integrator.cpp`:
 
-`
+```
 struct IntegratorTestInfo
 {
-    float a;            # lower limit of integration
+    float a;            # lower limit of integration 
     float b;            # upper limit of integration
     int nmax;           # maximum n-th order of integration
     int nints;          # number of integral performances between a and b
@@ -183,7 +180,7 @@ struct IntegratorTestInfo
     bool log;           # whether domain is in log-space
     char outFile[MAXLEN];# where to place outgoing integration table
 };
-`
+```
 
 1. `Parse_IntegralParams()` - populate an instance of `IntegratorTestInfo`
 2. `Parse_IntegralParam()` - populate one parameter of `IntegratorTestInfo`

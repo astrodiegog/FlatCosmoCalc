@@ -83,7 +83,7 @@ $$
 d_{\textrm{LOS}}(z) = D_H \int_0^z \frac{1}{\xi(z')} \textrm{d}z'
 $$
 
-where we adopt the notation from David Hogg that $D_H$ is the hubble distance calculated as $D_H = c / H_0$. All distances in the calculator is returned in units of Megaparsecs
+where we adopt the notation from David Hogg that $D_H$ is the hubble distance calculated as $D_H = c / H_0$. All distances in the calculator are saved in units of Megaparsecs.
 
 Transverse comoving distance
 

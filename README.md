@@ -217,3 +217,20 @@ $$
 $$
 
 If the logspace domain flag is selected in the integral test parameter file, the integral table will instead save $\ln(x)$. Routines in `integrands.cpp` that are suffixed with `_LN` are functions that expect $\ln(x)$ and return the function $x f(x)$.
+
+## ToDo
+
+I currently like that I have a well-working Makefile and source C++ files in the `/src` directory. I currently dislike most of everything else. I have three jupyter notebooks that provide easily understandable plots at the end of the notebook. Given the relevant CosmoParams and TimeParams files saved, I want to be able to run a `create_test[testname]_plots` (with a `KeepTables` flag so as to not destroy the outputted tables), where [testname] stands for either Integral, SingleCosmoSpecies, and Astropy. With this script, I could get rid of many txt files, keep every important test files in the `/test` directory.
+
+Once I have this stuff up and going, then I can clearly seperate `test` and `examples`. To be clear, we would be comparing my integral calculator with an analytical numpy implementation or Astropy.
+
+For each of the three tests, I will have the following scripts: `create_test_plots` (calling some plotting python script), `create_test_tables`, `create_test_bins`
+
+For the integral test, I just need to change the source code slightly such that EVERY integrand is saved (for-loop over each integrand). That would provide me with the binary to get all of the integrands saved. Currently, I need to change the integrand manually, ew. The other binaries can currently be compiled with different TYPE flags
+
+With these implementations, anybody should be able to do something along the lines of `source /test/create_testALL_plots.sh` and get ALL plots I could possiblly want.
+
+Once I have that, I can do something similar for different params in the examples directory, just like I currently do for the different DESIY4 data
+
+
+

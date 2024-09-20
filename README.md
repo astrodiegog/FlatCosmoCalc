@@ -232,5 +232,5 @@ With these implementations, anybody should be able to do something along the lin
 
 Once I have that, I can do something similar for different params in the examples directory, just like I currently do for the different DESIY4 data
 
-
+I would also really like to save files in HDF5 format instead of txt so that I can place the cosmology-specific in the `CosmoParams` struct as an attribute
 

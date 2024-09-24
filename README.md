@@ -188,7 +188,8 @@ struct IntegratorTestInfo
 4. `CreateIntegralTableLN()` - allocate memory to integral table & perform integral in log space
 5. `DestroyIntegralTable()` - de-allocate / free memory of integral table
 6. `SaveIntegralTable()` - save the integral table
-7. `RunTest()` - which performs the previous functions given just an integral param file
+7. `RunTest()` - which performs the previous functions given an integral param file
+7. `RunAllTests()` - performs the previous functions using all integrands in `testintegrands.cpp`
 
 A produced integral table will save the integral
 
@@ -217,6 +218,8 @@ $$
 $$
 
 If the logspace domain flag is selected in the integral test parameter file, the integral table will instead save $\ln(x)$. Routines in `integrands.cpp` that are suffixed with `_LN` are functions that expect $\ln(x)$ and return the function $x f(x)$.
+
+Compiling the program with `TYPE=integrator` will by default call the `RunAllTests()` routine that reproduces the tables in `test/integrands/`
 
 ## ToDo
 

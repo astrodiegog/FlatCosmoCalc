@@ -5,7 +5,7 @@
 
 #include "../integrator/integrator.h"
 #include "../integrator/integral_test.h"
-#include "../integrator/integrands.h"
+#include "../integrator/integrands_test.h"
 
 void RunAllTests()
 {

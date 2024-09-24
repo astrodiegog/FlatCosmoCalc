@@ -11,7 +11,7 @@ double integrandTWO(double x, double *args);
 double integrandTHREE(double x, double *args);
 
 /*\fn double integrandFOUR(double)*/
-/* Routine to help unit test integrator. */
+/* Routine to help unit test integrator. Compare against -1/(3 x^3) */
 double integrandFOUR(double x, double *args);
 
 /*\fn double integrandFOUR_LN(double)*/
@@ -19,25 +19,10 @@ double integrandFOUR(double x, double *args);
 double integrandFOUR_LN(double x, double *args);
 
 /*\fn double integrandFIVE(double)*/
-/* Routine to help unit test integrator. */
+/* Routine to help unit test integrator. Compare against arctan(x/a)/a */
 double integrandFIVE(double x, double *args);
 
 /*\fn double integrandFIVE_LN(double)*/
 /* Routine to help unit test integrator on logspace. Calls integrandFIVE */
 double integrandFIVE_LN(double x, double *args);
 
-/*\fn double integrandSIX(double)*/
-/* Routine to help unit test integrator. */
-double integrandSIX(double x, double *args);
-
-/*\fn double integrandSIX_LN(double)*/
-/* Routine to help unit test integrator on logspace. Calls integrandSIX */
-double integrandSIX_LN(double x, double *args);
-
-/*\fn double integrandSEVEN(double)*/
-/* Routine to help unit test integrator. */
-double integrandSEVEN(double x, double *args);
-
-/*\fn double integrandSEVEN_LN(double)*/
-/* Routine to help unit test integrator on logspace. Calls integrandSEVEN */
-double integrandSEVEN_LN(double x, double *args);

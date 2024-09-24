@@ -23,11 +23,12 @@ double integrandTHREE(double x, double *args)
 double integrandFOUR(double x, double *args)
 {
     double a = args[0];
-    double one_x = (1. + x);
-    double one_x2 = one_x * (1. + x);
-    double one_x3 = one_x2 * (1. + x);
+    double a_x = (a + x);
+    double a_x2 = a_x * (a + x);
+    double a_x3 = a_x2 * (a + x);
+    double a_x4 = a_x3 * (a + x);
 
-    return 1. / (one_x * sqrt(a * one_x3));
+    return 1. / (a_x4);
 }
 
 double integrandFOUR_LN(double ln_x, double *args)
@@ -41,12 +42,10 @@ double integrandFOUR_LN(double ln_x, double *args)
 double integrandFIVE(double x, double *args)
 {
     double a = args[0];
-    double one_x = (1. + x);
-    double one_x2 = one_x * (1. + x);
-    double one_x3 = one_x2 * (1. + x);
-    double one_x4 = one_x3 * (1. + x);
+    double a2 = a * a ;
+    double x2 = x * x ;
 
-    return 1. / (one_x * sqrt(a * one_x4));
+    return 1. / (a2 + x2);
 }
 
 double integrandFIVE_LN(double ln_x, double *args)
@@ -57,35 +56,3 @@ double integrandFIVE_LN(double ln_x, double *args)
     return integrand * x;
 }
 
-double integrandSIX(double x, double *args)
-{
-    double a = args[0];
-    double one_x = (1. + x);
-    double one_x2 = one_x * (1. + x);
-
-    return 1. / (one_x * sqrt(a * one_x2));
-}
-
-double integrandSIX_LN(double ln_x, double *args)
-{
-    double x = exp(ln_x);
-    double integrand = integrandSIX(x, args);
-
-    return integrand * x;
-}
-
-double integrandSEVEN(double x, double *args)
-{
-    double a = args[0];
-    double one_x = (1. + x);
-
-    return 1. / (one_x * sqrt(a * one_x));
-}
-
-double integrandSEVEN_LN(double ln_x, double *args)
-{
-    double x = exp(ln_x);
-    double integrand = integrandSEVEN(x, args);
-
-    return integrand * x;
-}

@@ -1,7 +1,0 @@
-a=0.
-b=100000.
-nmax=12
-acc=0.0000000001
-nints=50
-log=Y
-outFile=integrandSEVEN_vals.txt

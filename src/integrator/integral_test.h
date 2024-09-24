@@ -22,10 +22,13 @@ void DestroyIntegralTable(struct IntegratorTestInfo *integratortestinfo, double 
 /* Routine to save Integral Table to file specified in IntegratorTestInfo */
 void SaveIntegralTable(struct IntegratorTestInfo *integratortestinfo, double **integral_table);
 
-/*\fn void RunTest(char *, double*, double*) */
-/* Routine to save integral table on integrand to where integralparamfile says */
-void RunTest(char *integralparam_file, double (*integrand)(double, double*), double *integrand_args);
+/*\fn void RunTestFile(char *, double*, double*) */
+/* Routine to save integral table on integrand to given integralparamfile */
+void RunTestFile(char *integralparam_file, double (*integrand)(double, double*), double *integrand_args);
 
+/*\fn void RunAllTests(char *) */
+/* Routine to save all test integrands on integrand */
+void RunAllTests();
 
 /* Define max string buffer lengths */
 #define MAXLEN 1028

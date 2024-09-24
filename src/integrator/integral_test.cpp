@@ -7,8 +7,179 @@
 #include "../integrator/integral_test.h"
 #include "../integrator/integrands.h"
 
+void RunAllTests()
+{
+    /* Declare struct holding integration values */
+    struct IntegratorTestInfo integratortest_info;
 
-void RunTest(char *integralparam_file, double (*integrand)(double, double*), double *integrand_args)
+    /* Declare integration table */
+    double **int_table;
+
+    /* Declare integrand argument arrays & pointers */
+    double integrand_args_one[1];
+    double integrand_args_two[2];
+    double *pintegrand_args_one = &integrand_args_one[0];
+    double *pintegrand_args_two = &integrand_args_two[0];
+
+    /* Declare file name for each integrand test */
+    char fileName1[MAXLEN] = "integrandONE_vals.txt";
+    char fileName2[MAXLEN] = "integrandTWO_vals.txt";
+    char fileName3[MAXLEN] = "integrandTHREE_vals.txt";
+    char fileName4[MAXLEN] = "integrandFOUR_vals.txt";
+    char fileName4LN[MAXLEN] = "integrandFOURLN_vals.txt";
+    char fileName5[MAXLEN] = "integrandFIVE_vals.txt";
+    char fileName5LN[MAXLEN] = "integrandFIVELN_vals.txt";
+
+
+    /* Declare & initialize n-th order of Romberg integration, number of integrals, and accuracy */
+    integratortest_info.nmax = 12;
+    integratortest_info.nints = 50;
+    integratortest_info.acc = 0.0000000001;
+
+    /*
+    ** Test 1 ! 
+    */
+    integratortest_info.a = 0.0;
+    integratortest_info.b = 1.0;
+    integratortest_info.log = false;
+    strncpy(integratortest_info.outFile, fileName1, MAXLEN);
+    integrand_args_one[0] = 0.;
+
+    /* Create integration table */
+    int_table = CreateIntegralTable(&integratortest_info, integrandONE, pintegrand_args_one); 
+
+    /* Save integration table */
+    SaveIntegralTable(&integratortest_info, int_table);
+
+    /* Free the integration table from memory */
+    DestroyIntegralTable(&integratortest_info, int_table);
+
+
+
+    /* 
+    ** Test 2 ! 
+    */
+    integratortest_info.a = 0.0;
+    integratortest_info.b = 1.57079632679;
+    integratortest_info.log = false;
+    strncpy(integratortest_info.outFile, fileName2, MAXLEN);
+    integrand_args_one[0] = 0.;
+
+    /* Create integration table */
+    int_table = CreateIntegralTable(&integratortest_info, integrandTWO, pintegrand_args_one);
+
+    /* Save integration table */
+    SaveIntegralTable(&integratortest_info, int_table);
+
+    /* Free the integration table from memory */
+    DestroyIntegralTable(&integratortest_info, int_table);
+
+
+
+    /* 
+    ** Test 3 ! (test argument pass-through)
+    */
+    integratortest_info.a = 0.0;
+    integratortest_info.b = 1.0;
+    integratortest_info.log = false;
+    strncpy(integratortest_info.outFile, fileName3, MAXLEN);
+    integrand_args_two[0] = 1.;
+    integrand_args_two[1] = -2.;
+
+    /* Create integration table */
+    int_table = CreateIntegralTable(&integratortest_info, integrandTHREE, pintegrand_args_two);
+
+    /* Save integration table */
+    SaveIntegralTable(&integratortest_info, int_table);
+
+    /* Free the integration table from memory */
+    DestroyIntegralTable(&integratortest_info, int_table);
+
+
+
+    /* 
+    ** Test 4 ! 
+    */
+    integratortest_info.a = 0.0;
+    integratortest_info.b = 1.0;
+    integratortest_info.log = false;
+    strncpy(integratortest_info.outFile, fileName4, MAXLEN);
+    integrand_args_one[0] = 2.;
+
+    /* Create integration table */
+    int_table = CreateIntegralTable(&integratortest_info, integrandFOUR, pintegrand_args_one);
+
+    /* Save integration table */
+    SaveIntegralTable(&integratortest_info, int_table);
+
+    /* Free the integration table from memory */
+    DestroyIntegralTable(&integratortest_info, int_table);
+
+
+    /* 
+    ** Test 5 ! (testing log-space integration)
+    */
+    integratortest_info.a = 0.0;
+    integratortest_info.b = 10000.0;
+    integratortest_info.log = true;
+    strncpy(integratortest_info.outFile, fileName4LN, MAXLEN);
+    integrand_args_one[0] = 2.;
+
+    /* Create log-space integration table */
+    int_table = CreateIntegralTableLN(&integratortest_info, integrandFOUR_LN, pintegrand_args_one);
+
+    /* Save integration table */
+    SaveIntegralTable(&integratortest_info, int_table);
+
+    /* Free the integration table from memory */
+    DestroyIntegralTable(&integratortest_info, int_table);
+
+
+
+    /* 
+    ** Test 6 ! (arctan)
+    */
+    integratortest_info.a = 0.0;
+    integratortest_info.b = 1.0;
+    integratortest_info.log = false;
+    strncpy(integratortest_info.outFile, fileName5, MAXLEN);
+    integrand_args_one[0] = 2.;
+
+    /* Create integration table */
+    int_table = CreateIntegralTable(&integratortest_info, integrandFIVE, pintegrand_args_one);
+
+    /* Save integration table */
+    SaveIntegralTable(&integratortest_info, int_table);
+
+    /* Free the integration table from memory */
+    DestroyIntegralTable(&integratortest_info, int_table);
+
+
+    /* 
+    ** Test 7 ! (testing log-space integration)
+    */
+    integratortest_info.a = 0.0;
+    integratortest_info.b = 10000.0;
+    integratortest_info.log = true;
+    strncpy(integratortest_info.outFile, fileName5LN, MAXLEN);
+    integrand_args_one[0] = 2.;
+
+    /* Create log-space integration table */
+    int_table = CreateIntegralTableLN(&integratortest_info, integrandFIVE_LN, pintegrand_args_one);
+
+    /* Save integration table */
+    SaveIntegralTable(&integratortest_info, int_table);
+
+    /* Free the integration table from memory */
+    DestroyIntegralTable(&integratortest_info, int_table);
+
+
+
+
+}
+
+
+void RunTestFile(char *integralparam_file, double (*integrand)(double, double*), double *integrand_args)
 {
     /* Declare struct holding integration values */
     struct IntegratorTestInfo integratortest_info;

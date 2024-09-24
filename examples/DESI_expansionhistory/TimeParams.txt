@@ -1,4 +1,4 @@
 log=Y
 zmin=0.
-zmax=18.
+zmax=100.
 ntime=500

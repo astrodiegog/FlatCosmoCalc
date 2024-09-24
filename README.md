@@ -160,7 +160,7 @@ where `CosmoParams.txt` holds the cosmological parameters, `TimeParams.txt` hold
 
 In the `test` subdirectory, there are two jupyter notebooks that serve as benchmarks that things are working well.
 
-`AstropyTest.ipynb` - Compares table computed with Planck2018 parameters against astropy
+`AstropyTest.ipynb` - Compares table computed with Planck2018 parameters against astropy. Compiling with `TYPE=allinfo` and running with the cosmological parameter file `test/planck/CosmoParamsPlanck2018.txt` and the time domain parameter file `test/planck/TimeParams.txt` produces the table `test/planck/table_Planck2018.txt`
 
 `IntegratorTest.ipynb` - Compares some integration tables against analytical solutions
 

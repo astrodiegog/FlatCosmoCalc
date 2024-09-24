@@ -1,0 +1,4 @@
+log=N
+zmin=0.
+zmax=1000.
+ntime=500

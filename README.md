@@ -162,12 +162,14 @@ In the `test` subdirectory, there are two jupyter notebooks that serve as benchm
 
 `AstropyTest.ipynb` - Compares table computed with Planck2018 parameters against astropy. Compiling with `TYPE=allinfo` and running with the cosmological parameter file `test/planck/CosmoParamsPlanck2018.txt` and the time domain parameter file `test/planck/TimeParams.txt` produces the table `test/planck/table_Planck2018.txt`
 
+`CosmoBasic.ipynb` - Compares cosmologies that are dominated by one specific species (matter, radiation, curvature, dark energy). Compiling with `TYPE=time` and running with each cosmological parameter file in `test/basic/` and the time domain parameter file `test/basic/TimeParams.txt` produces tables for the notebook
+
 `IntegratorTest.ipynb` - Compares some integration tables against analytical solutions
 
 
 ## Integration
 
-To create this calculator, we used an implementation of Romberg's integration method. To ensure that this method is accurate, we created a `integral_test` file in the `integrator` subdirectory. This file has a struct definition and six functions in testing the integrator in `integrator.cpp`:
+To create this calculator, we used an implementation of Romberg's integration method in log-space. To ensure that this method is accurate, we created a `integral_test` file in the `integrator` subdirectory. This file has a struct definition and six functions in testing the integrator in `integrator.cpp`:
 
 ```
 struct IntegratorTestInfo

@@ -21,22 +21,12 @@ int main(int argc, char **argv)
 
 #ifdef TEST_INTEGRATOR
 
-    /* Declare integrator parameter file */
-    char *integratorparam_file;
-
-    if (argc < 2)
+    if (argc < 1)
     {
-        fprintf(stderr, "No Integral Param file! ahh \n");
-    }
-    else
-    {
-        integratorparam_file = argv[1];
+        fprintf(stderr, "No Integral Param directory ! ahh \n");
     }
 
-    double integrand_args[1] = {0.25};
-    double *pintegrand_args = &integrand_args[0];
-
-    RunTest(integratorparam_file, integrandSEVEN_LN, pintegrand_args);
+    RunAllTests();
 
 #else
     /* Declare cosmo & time parameter file */

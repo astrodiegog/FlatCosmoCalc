@@ -165,7 +165,15 @@ double Cosmology::time_lookback(double z)
     double args[6] = {cosmoparams->OmegaM, cosmoparams->OmegaR, cosmoparams->OmegaL, cosmoparams->OmegaK, cosmoparams->w0, cosmoparams->wa};
     double *fn_args = &args[0];
 
-    return RombergIntegral(time_lookback_integrand, fn_args, 0., z, integral_Rmmax, integral_acc);
+    /* Guard against integrating from 0 to 0 */
+    if (z <= 0)
+    {
+        return 0;
+    }
+    double ln_zero = log(LN_MIN);
+    double ln_z = log(z);
+
+    return RombergIntegral(time_lookback_integrand_LN, fn_args, ln_zero, ln_z, integral_Rmmax, integral_acc);
 }
 
 double Cosmology::time_age(double z)
@@ -202,7 +210,15 @@ double Cosmology::time_conformal(double z)
     double args[6] = {cosmoparams->OmegaM, cosmoparams->OmegaR, cosmoparams->OmegaL, cosmoparams->OmegaK, cosmoparams->w0, cosmoparams->wa};
     double *fn_args = &args[0];
 
-    return RombergIntegral(time_conformal_integrand, fn_args, 0., z, integral_Rmmax, integral_acc);
+    /* Guard against integrating from 0 to 0 */
+    if (z <= 0)
+    {   
+        return 0;
+    }
+    double ln_zero = log(LN_MIN);
+    double ln_z = log(z);
+
+    return RombergIntegral(time_conformal_integrand_LN, fn_args, ln_zero, ln_z, integral_Rmmax, integral_acc);
 }
 
 double Cosmology::time_conformal_age(double z)

@@ -47,9 +47,9 @@ strOmegaM = r"$\Omega_{\rm{m}} = $"
 
 strlabel_LCDM = r"$\Lambda$ CDM (" + strOmegaM + r"$0.3000$)"
 strlabel_DESI_CMB = "DESI+CMB (" + strOmegaM + r"$0.3069$)" 
-strlabel_DESI_CMB_Pantheon = "DESI+CMB+Pantheon (" + strOmegaM + r"$0.3085$)"
-strlabel_DESI_CMB_DESY5 = "DESI+CMB+DESY5 (" + strOmegaM + r"$0.3160$)"
-strlabel_DESI_CMB_Union3 = "DESI+CMB+Union3 (" + strOmegaM + r"$0.3230$)"
+strlabel_DESI_CMB_Pantheon = "DESI+CMB\n+Pantheon (" + strOmegaM + r"$0.3085$)"
+strlabel_DESI_CMB_DESY5 = "DESI+CMB\n+DESY5 (" + strOmegaM + r"$0.3160$)"
+strlabel_DESI_CMB_Union3 = "DESI+CMB\n+Union3 (" + strOmegaM + r"$0.3230$)"
 
 strlabels_all = [strlabel_DESI_CMB, strlabel_DESI_CMB_Pantheon,
                  strlabel_DESI_CMB_DESY5, strlabel_DESI_CMB_Union3]
@@ -61,6 +61,18 @@ table_Concordance = np.loadtxt(tablepathLCDM, skiprows=nskiprows, delimiter = ',
 a_arr = table_Concordance[:,2]
 time_lookH0_Concordance = table_Concordance[:,3] # in units of H0
 scalefn_Concordance = interp1d(time_lookH0_Concordance, a_arr)
+timelookH0fn_Concordance = interp1d(a_arr, time_lookH0_Concordance)
+
+# define redshift for a reference lookback time & appropriate legend labels
+redshift_lookref0 = 1.0
+redshift_lookref1 = 2.0
+redshift_lookref2 = 3.0
+a_lookref0 = 1. / (1. + redshift_lookref0)
+a_lookref1 = 1. / (1. + redshift_lookref1)
+a_lookref2 = 1. / (1. + redshift_lookref2)
+strlabel_lookref0 = rf'$z = {redshift_lookref0:.2f}$'
+strlabel_lookref1 = rf'$z = {redshift_lookref1:.2f}$'
+strlabel_lookref2 = rf'$z = {redshift_lookref2:.2f}$'
 
 
 for i in range(4):
@@ -84,6 +96,7 @@ for i in range(4):
     OmegaM = np.arange(0.3, 0.33, step=0.005)
     lines_lookback = []
     lines_lookbackdiff = []
+    lines_constscale = []
     for i, curr_OmegaM in enumerate(OmegaM):
         table_fName = table_fNameBase_cosmology + f"_OmegaM{i:.0f}.txt"
         table_fPath = tables_fPath + table_fName
@@ -114,6 +127,7 @@ for i in range(4):
         lines_lookback.append(lookback_elm)
         lines_lookbackdiff.append(lookbackdiff_elm)
 
+
     # combine to a LineCollection object
     linescollec_look = LineCollection(lines_lookback, array=OmegaM, cmap='rainbow')
     linescollec_lookdiff = LineCollection(lines_lookbackdiff, array=OmegaM, cmap='rainbow')
@@ -131,6 +145,16 @@ for i in range(4):
     _ = ax_lookdiff.plot(time_lookH0_Cosmology[1:], a_arr[1:] / scalefn_Concordance(time_lookH0_Cosmology[1:]), 
                         label=strlabel_Cosmology, ls='--')
 
+    # add redshift
+    _ = ax_look.axhline(y = a_lookref0, c='k', ls='--', label=strlabel_lookref0)
+    _ = ax_look.axhline(y = a_lookref1, c='k', ls=':', label=strlabel_lookref1)
+    _ = ax_look.axhline(y = a_lookref2, c='k', ls='-.', label=strlabel_lookref2)
+    _ = ax_lookdiff.plot(time_lookH0_Concordance, a_lookref0 / scalefn_Concordance(time_lookH0_Concordance), 
+                         c='k', ls='--', label=strlabel_lookref0)
+    _ = ax_lookdiff.plot(time_lookH0_Concordance, a_lookref1 / scalefn_Concordance(time_lookH0_Concordance), 
+                         c='k', ls=':', label=strlabel_lookref1)
+    _ = ax_lookdiff.plot(time_lookH0_Concordance, a_lookref2 / scalefn_Concordance(time_lookH0_Concordance), 
+                         c='k', ls='-.', label=strlabel_lookref2)
 
     # add colorbar
     divider_lookdiff = make_axes_locatable(ax_lookdiff)
@@ -166,8 +190,8 @@ for i in range(4):
     _ = ax_lookdiff.grid(which='both', axis='both', alpha=0.3)
 
     # add legend
-    _ = ax_look.legend(fontsize=15, loc='upper left')
-    _ = ax_lookdiff.legend(fontsize=15, loc='lower right')
+    _ = ax_look.legend(fontsize=15, loc='upper left', alignment='right')
+    _ = ax_lookdiff.legend(fontsize=15, loc='lower right', alignment='right')
 
     _ = fig.tight_layout()
     _ = fig.savefig(figfName_cosmology, dpi=256)
